@@ -1,0 +1,63 @@
+body {
+	width: 100%;
+	background-color: #EEE;
+	background-image: url('../images/background.png');
+	background-repeat: repeat;
+	padding: 0;
+	margin: 0;
+	font-family: helvetica;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	margin: 0;
+}
+
+img {
+	height: 180px;
+	width: 90%;
+	border: rgb(105,105,105) solid 3px;
+}
+
+#cocktailname {
+	width: 100%;
+	height: 40px;
+	background-image: url('../images/title.png');
+	background-repeat: repeat-x;
+	text-align: center;
+	line-height: 40px;
+	color: white;
+	font-size: 25px;
+}
+
+#imgscore {
+	width: 100%;
+	height: 200px;
+	background-image: url('../images/info.png');
+	background-repeat: repeat-x;
+	color: white;
+}
+
+#cocktailpicture {
+	width: 50%;
+	height: 180px;
+	float: left;
+	text-align: center;
+	line-height: 36px;
+	margin: 7px auto;
+}
+
+#score {
+	padding-top: 50px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 25px;
+}
+
+#preparation {
+	padding: 10px 5%;
+	text-align: justify;
+}
+
+#ingredients {
+	margin-top: 10px;
+}
