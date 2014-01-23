@@ -4,24 +4,16 @@
 	<meta charset="UTF-8">
 	<title>Cocktail shaker</title>
 	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-	<script type="text/javascript" charset="utf-8" src="shake.js"></script>
+	<script type="text/javascript" charset="utf-8" src="gshake.js"></script>
 	<script type="text/javascript" charset="utf-8" src="grabshake.js"></script>
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<link rel="stylesheet" href="css/style.css">
 	<meta name="viewport" id="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;">
 	<script>
-		var shaked = 0;
-		var onShake = function () {
-			shaked++;
-			console.log("you shaked " + shaked + " times.");
-			grabShake();
-			var color = Math.floor(Math.random() * 999) + 1; // To check shake on mobile
-			//document.body.style.background = "#"+color; // To check shake on mobile
-		};
-		// Start watching for shake gestures and call "onShake"
-		shake.startWatch(onShake);
-		// Stop watching for shake gestures
-		//shake.stopWatch();
+		(this).gShake(function() { 
+			console.log("shaken, not sturred");
+			grabshake();
+		});
 	</script>
 </head>
 <body>
@@ -39,3 +31,21 @@
 	</div>
 </body>
 </html>
+
+
+
+
+<!--
+var shaked = 0;
+		var onShake = function () {
+			shaked++;
+			console.log("you shaked " + shaked + " times.");
+			grabShake();
+			var color = Math.floor(Math.random() * 999) + 1; // To check shake on mobile
+			//document.body.style.background = "#"+color; // To check shake on mobile
+		};
+		// Start watching for shake gestures and call "onShake"
+		shake.startWatch(onShake);
+		// Stop watching for shake gestures
+		//shake.stopWatch();
+-->

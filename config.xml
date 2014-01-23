@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <widget xmlns = "http://www.w3.org/ns/widgets"
-   xmlns:gap = "http://phonegap.com/ns/1.0"
-   id        = "example"
-   version    = "2.0.0">
-
-   <icon src="images/icon.png" />
+	xmlns:gap = "http://phonegap.com/ns/1.0"
+	id        = "example"
+	version    = "1.0">
+	<name>your appname</name>
+	<icon src="images/icon.png" />
 </widget>

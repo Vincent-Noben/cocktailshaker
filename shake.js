@@ -1,63 +1,114 @@
-var shake = (function () {
-	var shake = {},
-		watchId = null,
-		options = { frequency: 300 },
-		previousAcceleration = { x: null, y: null, z: null },
-		shakeCallBack = null;
-	
-	// Start watching the accelerometer for a shake gesture
-	shake.startWatch = function (onShake) {
-		if (onShake) {
-			shakeCallBack = onShake;
-		}
-		watchId = navigator.accelerometer.watchAcceleration(getAccelerationSnapshot, handleError, options);
-	};
-	
-	// Stop watching the accelerometer for a shake gesture
-	shake.stopWatch = function () {
-		if (watchId !== null) {
-			navigator.accelerometer.clearWatch(watchId);
-			watchId = null;
-		}
-	};
-	
-	// Gets the current acceleration snapshot from the last accelerometer watch
-	function getAccelerationSnapshot() {
-		navigator.accelerometer.getCurrentAcceleration(assessCurrentAcceleration, handleError);
-	}
-	
-	// Assess the current acceleration parameters to determine a shake
-	function assessCurrentAcceleration(acceleration) {
-		var accelerationChange = {};
-		if (previousAcceleration.x !== null) {
-			accelerationChange.x = Math.abs(previousAcceleration.x, acceleration.x);
-			accelerationChange.y = Math.abs(previousAcceleration.y, acceleration.y);
-			accelerationChange.z = Math.abs(previousAcceleration.z, acceleration.z);
-		}
-		if (accelerationChange.x + accelerationChange.y + accelerationChange.z > 30) {
-			// Shake detected
-			if (typeof (shakeCallBack) === "function") {
-				shakeCallBack();
-			}
-			shake.stopWatch();
-			setTimeout(shake.startWatch, 1000);
-			previousAcceleration = { 
-				x: null, 
-				y: null, 
-				z: null
-			}
-		} else {
-			previousAcceleration = {
-				x: acceleration.x,
-				y: acceleration.y,
-				z: acceleration.z
-			}
-		}
-	}
- 
-	// Handle errors here
-	function handleError() {
-	}
-	
-	return shake;
-})();
+/*
+ *
+ * Find more about this plugin by visiting
+ * http://alxgbsn.co.uk/
+ *
+ * Copyright (c) 2010-2012 Alex Gibson
+ * Released under MIT license
+ *
+ */
+
+(function (window, document) {
+
+    function Shake() {
+
+        //feature detect
+        this.hasDeviceMotion = 'ondevicemotion' in window;
+
+        //default velocity threshold for shake to register
+        this.threshold = 15;
+
+        //use date to prevent multiple shakes firing
+        this.lastTime = new Date();
+
+        //accelerometer values
+        this.lastX = null;
+        this.lastY = null;
+        this.lastZ = null;
+
+        //create custom event
+        if (typeof document.CustomEvent === "function") {
+            this.event = new document.CustomEvent('shake', {
+                bubbles: true,
+                cancelable: true
+            });
+        } else if (typeof document.createEvent === "function") {
+            this.event = document.createEvent('Event');
+            this.event.initEvent('shake', true, true);
+        } else { 
+          return false;
+        }
+    }
+
+    //reset timer values
+    Shake.prototype.reset = function () {
+        this.lastTime = new Date();
+        this.lastX = null;
+        this.lastY = null;
+        this.lastZ = null;
+    };
+
+    //start listening for devicemotion
+    Shake.prototype.start = function () {
+        this.reset();
+        if (this.hasDeviceMotion) { window.addEventListener('devicemotion', this, false); }
+    };
+
+    //stop listening for devicemotion
+    Shake.prototype.stop = function () {
+
+        if (this.hasDeviceMotion) { window.removeEventListener('devicemotion', this, false); }
+        this.reset();
+    };
+
+    //calculates if shake did occur
+    Shake.prototype.devicemotion = function (e) {
+
+        var current = e.accelerationIncludingGravity,
+            currentTime,
+            timeDifference,
+            deltaX = 0,
+            deltaY = 0,
+            deltaZ = 0;
+
+        if ((this.lastX === null) && (this.lastY === null) && (this.lastZ === null)) {
+            this.lastX = current.x;
+            this.lastY = current.y;
+            this.lastZ = current.z;
+            return;
+        }
+
+        deltaX = Math.abs(this.lastX - current.x);
+        deltaY = Math.abs(this.lastY - current.y);
+        deltaZ = Math.abs(this.lastZ - current.z);
+
+        if (((deltaX > this.threshold) && (deltaY > this.threshold)) || ((deltaX > this.threshold) && (deltaZ > this.threshold)) || ((deltaY > this.threshold) && (deltaZ > this.threshold))) {
+            //calculate time in milliseconds since last shake registered
+            currentTime = new Date();
+            timeDifference = currentTime.getTime() - this.lastTime.getTime();
+
+            if (timeDifference > 1000) {
+                window.dispatchEvent(this.event);
+                this.lastTime = new Date();
+            }
+        }
+
+        this.lastX = current.x;
+        this.lastY = current.y;
+        this.lastZ = current.z;
+
+    };
+
+    //event handler
+    Shake.prototype.handleEvent = function (e) {
+
+        if (typeof (this[e.type]) === 'function') {
+            return this[e.type](e);
+        }
+    };
+
+    //create a new instance of shake.js.
+    var myShakeEvent = new Shake();
+    myShakeEvent && myShakeEvent.start();
+
+}(window, document));
