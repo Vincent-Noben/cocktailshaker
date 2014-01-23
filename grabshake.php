@@ -1,5 +1,10 @@
 <?php
 	header('Access-Control-Allow-Origin: *'); // Om ervoor te zorgen dat locale site php op server kan aanspreken.
+
+
+	$prevShake = $_GET["prevShake"];
+
+
 	$connect=mysqli_connect("vincentnoben.mctantwerpen.kdg.be","vince_ctshaker","ctshakerpassword","vincentnoben_cocktailshaker");
 	// Check connection
 	if (mysqli_connect_errno($connect))
@@ -11,10 +16,12 @@
 	$rowresult = mysqli_query($connect,$checkrow);
 	$rows = mysqli_num_rows($rowresult);
 	//echo "Er zijn " . $rows." cocktails gevonden in de database.<br>";
-	$random = rand(1,$rows);
+	//$random = rand(1,$rows);
+	
+	while( in_array( ($random = rand(1,$rows)), array($prevShake)));
 	//echo "Random nummer tussen 1 en ".$rows." is: ".$random."<br>";
 
-	$sql = "	SELECT c.name,c.recipe,c.img
+	$sql = "	SELECT c.name,c.recipe,c.img,c.id
 				FROM tbl_cocktails c
 				WHERE c.id = $random
 			";
@@ -31,7 +38,7 @@
 			$info[] .= $test[0]; // Name
 			$info[] .= $test[1]; // recipe
 			$info[] .= $test[2]; // img
-			//$info .= $test[3]; // (Votes)
+			$info[] .= $test[3]; // (id)
 		}
 		//var_dump($info);
 	}

@@ -1,16 +1,19 @@
+var prevShake = 0;
+
 function grabShake () {
 	console.log("grabShake called.");
 	$.ajax({
 		url: 'http://vincentnoben.mctantwerpen.kdg.be/cocktailshaker/grabshake.php',
 		//url: 'grabshake.php',
-		type: 'get',
+		type: 'GET',
 		dataType: 'json',
-		data: "",
+		data: "prevShake="+prevShake,
 		crossDomain: true,
 		async: false,
 
 		success: function (response) {
-			console.log(response);
+			prevShake = response.info[3];
+			console.log("prevShake = "+prevShake);
 			$("#cocktailname").empty().html(response.info[0]); // Cocktail title
 			$("#cocktailpicture").empty().html("<img src=\"images/cocktails/"+response.info[2]+"\">");
 			$("#score").empty().html("Score:<br>5/10");
