@@ -3,6 +3,7 @@
 	xmlns:gap = "http://phonegap.com/ns/1.0"
 	id        = "example"
 	version    = "1.0">
-	<name>your appname</name>
+	<name>Cocktail shaker 1.0</name>
+	<description>Shake the device to get full instructions for the most wonderfull and delicious cocktails</description>
 	<icon src="images/icon.png" />
 </widget>

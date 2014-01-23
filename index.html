@@ -4,16 +4,22 @@
 	<meta charset="UTF-8">
 	<title>Cocktail shaker</title>
 	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-	<script type="text/javascript" charset="utf-8" src="gshake.js"></script>
+	<script type="text/javascript" charset="utf-8" src="shake.js"></script>
 	<script type="text/javascript" charset="utf-8" src="grabshake.js"></script>
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<link rel="stylesheet" href="css/style.css">
 	<meta name="viewport" id="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;">
 	<script>
-		(this).gShake(function() { 
+		window.addEventListener('shake', shakeEventDidOccur, false);
+
+		//function to call when shake occurs
+		function shakeEventDidOccur () {
 			console.log("shaken, not sturred");
 			grabshake();
-		});
+			//put your own code here etc.
+			if (confirm("Undo?")) {
+			}
+		}
 	</script>
 </head>
 <body>
@@ -48,4 +54,11 @@ var shaked = 0;
 		shake.startWatch(onShake);
 		// Stop watching for shake gestures
 		//shake.stopWatch();
+
+<script>
+	(this).gShake(function() { 
+		console.log("shaken, not sturred");
+		grabshake();
+	});
+</script>
 -->
