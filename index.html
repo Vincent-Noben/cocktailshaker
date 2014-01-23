@@ -10,16 +10,16 @@
 	<link rel="stylesheet" href="css/style.css">
 	<meta name="viewport" id="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;">
 	<script>
-		window.addEventListener('shake', shakeEventDidOccur, false);
-
-		//function to call when shake occurs
-		function shakeEventDidOccur () {
-			console.log("shaken, not sturred");
-			grabshake();
-			//put your own code here etc.
-			if (confirm("Undo?")) {
-			}
-		}
+		var shaked = 0;
+		var onShake = function () {
+			shaked++;
+			console.log("you shaked " + shaked + " times.");
+			grabShake();
+		};
+		// Start watching for shake gestures and call "onShake"
+		shake.startWatch(onShake);
+		// Stop watching for shake gestures
+		//shake.stopWatch();
 	</script>
 </head>
 <body>
@@ -42,7 +42,8 @@
 
 
 <!--
-var shaked = 0;
+<script>
+	var shaked = 0;
 		var onShake = function () {
 			shaked++;
 			console.log("you shaked " + shaked + " times.");
@@ -54,11 +55,28 @@ var shaked = 0;
 		shake.startWatch(onShake);
 		// Stop watching for shake gestures
 		//shake.stopWatch();
+</script>
+
 
 <script>
 	(this).gShake(function() { 
 		console.log("shaken, not sturred");
 		grabshake();
 	});
+</script>
+
+
+<script>
+	window.addEventListener('shake', shakeEventDidOccur, false);
+
+		//function to call when shake occurs
+		function shakeEventDidOccur () {
+			console.log("shaken, not sturred");
+			grabshake();
+			//put your own code here etc.
+			if (confirm("Undo?")) {
+			}
+		}
+	</script>
 </script>
 -->
