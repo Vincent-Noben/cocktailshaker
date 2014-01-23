@@ -17,7 +17,6 @@ function grabShake () {
 			$("#recipe").empty().html("<h4>Recipe:</h4>"+response.info[1]); // Cocktail recipe
 			var ingredients = "";
 			$.each(response.ingredients, function(index, val) { // Loops trough all ingredients.
-				console.log(val);
 				ingredients += val + " "; // This adds the sql array item to the output.
 				if ((index+1) % 3 == 0) {
 					ingredients += "<br>";

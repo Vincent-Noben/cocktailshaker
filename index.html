@@ -3,23 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Cocktail shaker</title>
-	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-	<script type="text/javascript" charset="utf-8" src="shake.js"></script>
-	<script type="text/javascript" charset="utf-8" src="grabshake.js"></script>
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8" src="grabshake.js"></script>
+	<script type="text/javascript" charset="utf-8" src="gshake.js"></script>
 	<link rel="stylesheet" href="css/style.css">
 	<meta name="viewport" id="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;">
-	<script>
-		var shaked = 0;
-		var onShake = function () {
-			shaked++;
-			console.log("you shaked " + shaked + " times.");
+	<script type="text/javascript">
+		$(this).gShake(function() {
+			alert("shake detected");
 			grabShake();
-		};
-		// Start watching for shake gestures and call "onShake"
-		shake.startWatch(onShake);
-		// Stop watching for shake gestures
-		//shake.stopWatch();
+	});
 	</script>
 </head>
 <body>
